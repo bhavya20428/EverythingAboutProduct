@@ -8,14 +8,18 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract ProductManagement is AccessControl{
     using Counters for Counters.Counter;
+
     Counters.Counter public tokenIDCounter;
     Counters.Counter public sellerIDCounter;
+
     mapping(address => Seller) public addressToSeller;
     mapping (uint => Item) public serialToItem;
+
     uint public constant RATING_DECIMAL = 100;
     bytes32 public constant SELLER_ROLE = keccak256("SELLER_ROLE");
     uint256 private constant RESOLUTION = 1000000000000000;
-    struct location{
+
+    struct Location{
         uint lat;
         uint long;
     }
@@ -23,7 +27,7 @@ contract ProductManagement is AccessControl{
         string name;
         uint ID;
         address sellerAddress;
-        location cordinates;
+        Location cordinates;
 
 
     }
@@ -39,17 +43,17 @@ contract ProductManagement is AccessControl{
 
     constructor(){
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(SELLER_ROLE, msg.sender);
     }
 
     function getSeller(address _address) public view returns (Seller memory ){
         return addressToSeller[_address];
     }
 
-    function addSeller(string memory _name, address _sellerAddress,uint _lat , uint _long) external onlyRole(DEFAULT_ADMIN_ROLE) returns(Seller memory ) {
+    function addSeller(string memory _name, address _sellerAddress,uint _lat , uint _long) external onlyRole(DEFAULT_ADMIN_ROLE)  {
         require(addressToSeller[_sellerAddress].ID!=0 , "Seller already present");
         sellerIDCounter.increment();
-        addressToSeller[_sellerAddress] = Seller(_name , sellerIDCounter.current() , _sellerAddress , location(_lat , _long)) ;
-        return addressToSeller[_sellerAddress];
+        addressToSeller[_sellerAddress] = Seller(_name , sellerIDCounter.current() , _sellerAddress , Location(_lat , _long)) ;
     }
 
     function addItem(string memory _name ,  uint _serialNumber  ) external  onlyRole(SELLER_ROLE) {
@@ -59,7 +63,11 @@ contract ProductManagement is AccessControl{
         item.name = _name;
         item.serialNumber = tokenIDCounter.current();
         item.totalRatings = 0;
-
-
     }
+
+    function removeItem(uint _serialNumber) external onlyRole(DEFAULT_ADMIN_ROLE){
+        delete serialToItem[_serialNumber];
+    }
+
+    
 }
