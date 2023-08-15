@@ -8,7 +8,7 @@ contract ProductManagement is Ownable{
     using Counters for Counters.Counter;
     Counters.Counter public tokenIDCounter;
     Counters.Counter public sellerIDCounter;
-    mapping(address => Seller) public IDToSeller;
+    mapping(address => Seller) public addressToSeller;
     mapping (string => Item) public serialToItem;
     uint public constant RATING_DECIMAL = 100;
 
@@ -18,11 +18,13 @@ contract ProductManagement is Ownable{
     }
     struct Seller{
         string name;
+        uint ID;
         address sellerAddress;
         location cordinates;
-        
+
 
     }
+
     struct Item{
         string name;
         string productNumber;
@@ -35,6 +37,12 @@ contract ProductManagement is Ownable{
     }
 
     function getSeller(address _address) public view returns (Seller memory ){
-        return IDToSeller[_address];
+        return addressToSeller[_address];
+    }
+
+    function addSeller(string memory _name, address _sellerAddress,uint _lat , uint _long) external onlyOwner returns(Seller memory ) {
+        sellerIDCounter.increment();
+        addressToSeller[_sellerAddress] = Seller(_name , sellerIDCounter.current() , _sellerAddress , location(_lat , _long)) ;
+        return addressToSeller[_sellerAddress];
     }
 }
