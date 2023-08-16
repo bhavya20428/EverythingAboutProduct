@@ -2,7 +2,6 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
@@ -116,7 +115,7 @@ function Content(props) {
         </Typography>
       </Toolbar>
       {/* <Divider sx={{ backgroundColor: "#ffffff" }} /> */}
-      <List sx={{ elevation: 20 ,align:"center"}}>
+      <List sx={{ elevation: 20 }}>
         <ListItem
           key="reviews"
           disablePadding
