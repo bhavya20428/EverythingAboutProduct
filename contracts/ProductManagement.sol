@@ -69,5 +69,9 @@ contract ProductManagement is AccessControl{
         delete serialToItem[_serialNumber];
     }
 
+    function removeSeller(address _sellerAddress) external onlyRole(DEFAULT_ADMIN_ROLE){
+        delete addressToSeller[_sellerAddress];
+    }
+
     
 }
