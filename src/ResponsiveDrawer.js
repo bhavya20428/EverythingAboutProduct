@@ -34,13 +34,23 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <Toolbar />
-      {/* <Divider /> */}
-      <List>
+      <Toolbar>
+        <Typography
+          variant="h6"
+          noWrap
+          component="div"
+          sx={{ fontWeight: "500" }}
+        >
+          Herbal Facewash
+        </Typography>
+
+      </Toolbar>
+      <Divider sx={{backgroundColor: "#ffffff"}} />
+      <List sx={{ elevation: 20 }}>
         <ListItem key="Product Reviews" disablePadding onclick="setActive()">
           <ListItemButton>
             <ListItemIcon>
-              <ReviewsOutlinedIcon />
+              <ReviewsOutlinedIcon sx={{ color: "#ffffff" }} />
             </ListItemIcon>
             <ListItemText primary="Reviews" />
           </ListItemButton>
@@ -49,7 +59,7 @@ function ResponsiveDrawer(props) {
         <ListItem key="AI Summary" disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <LightbulbOutlinedIcon />
+              <LightbulbOutlinedIcon sx={{ color: "#ffffff" }} />
             </ListItemIcon>
             <ListItemText primary=" AI Summary" />
           </ListItemButton>
@@ -58,7 +68,7 @@ function ResponsiveDrawer(props) {
         <ListItem key="Add Comment" disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <AddCommentOutlinedIcon />
+              <AddCommentOutlinedIcon sx={{ color: "#ffffff" }} />
             </ListItemIcon>
             <ListItemText primary="Add Comment" />
           </ListItemButton>
@@ -80,8 +90,11 @@ function ResponsiveDrawer(props) {
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
+          display: { sm: "none" },
           ml: { sm: `${drawerWidth}px` },
-          "box-shadow": 0
+          boxShadow: 0,
+          backgroundColor: "#000000",
+          color: "#ffffff",
         }}
       >
         <Toolbar>
@@ -90,12 +103,22 @@ function ResponsiveDrawer(props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{
+              mr: 2,
+              display: { sm: "none" },
+              backgroundColor: "#000000",
+              color: "#ffffff",
+            }}
           >
-            <MenuIcon />
+            <MenuIcon/>
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Lorem FaceWash
+          <Typography
+            variant="h5"
+            noWrap
+            component="div"
+            sx={{ fontWeight: "900" }}
+          >
+          
           </Typography>
         </Toolbar>
       </AppBar>
@@ -103,11 +126,13 @@ function ResponsiveDrawer(props) {
       {/* MenuBar */}
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 }}}
+        sx={{
+          width: { sm: drawerWidth },
+          flexShrink: { sm: 0 },
+        }}
         aria-label="menu bar"
         id="menuBar"
       >
-        
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
 
         {/* Small Screen */}
@@ -121,9 +146,12 @@ function ResponsiveDrawer(props) {
           }}
           sx={{
             display: { xs: "block", sm: "none" },
+
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "#000000",
+              color: "#ffffff",
             },
           }}
         >
@@ -138,6 +166,8 @@ function ResponsiveDrawer(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "#000000",
+              color: "#ffffff",
             },
           }}
           open
@@ -155,11 +185,10 @@ function ResponsiveDrawer(props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <Toolbar />
+        <Toolbar sx={{ display: { sm: "none" } }} />
         <Typography paragraph>
-         <Comments />
+          <Comments />
         </Typography>
-        
       </Box>
     </Box>
   );
