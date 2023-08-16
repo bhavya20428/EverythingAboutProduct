@@ -16,15 +16,14 @@ import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import './ResponsiveDrawer.css';
-import Comments from "./comments.js";
-import AISummary from "./aiSummary";
+import Comments from "./comments";
+import AIChatbot from "./aiChatbot";
 import AddReview from "./addReview";
 
 
 const drawerWidth = 240;
 
-function ResponsiveDrawer(props) {
+function Content(props) {
   const messages = [
     {
       id: 1,
@@ -95,8 +94,8 @@ function ResponsiveDrawer(props) {
   const handleMenuBar = (key) => {
     if ( key  === "reviews") {
       setMainContent(<Comments reviews={messages} average={3.75}/>);
-    } else if (key === "summary") {
-      setMainContent(<AISummary />);
+    } else if (key === "chatbot") {
+      setMainContent(<AIChatbot />);
     } else if ( key  === "add") {
       setMainContent(<AddReview />);
     } 
@@ -108,15 +107,16 @@ function ResponsiveDrawer(props) {
       <Toolbar>
         <Typography
           variant="h6"
-          noWrap
+          align="center"
+          
           component="div"
-          sx={{ fontWeight: "500" }}
+          sx={{ fontWeight: "700" ,letterSpacing:2,m:2}}
         >
-          Herbal Facewash
+          {props["name"]}
         </Typography>
       </Toolbar>
-      <Divider sx={{ backgroundColor: "#ffffff" }} />
-      <List sx={{ elevation: 20 }}>
+      {/* <Divider sx={{ backgroundColor: "#ffffff" }} /> */}
+      <List sx={{ elevation: 20 ,align:"center"}}>
         <ListItem
           key="reviews"
           disablePadding
@@ -131,15 +131,15 @@ function ResponsiveDrawer(props) {
         </ListItem>
 
         <ListItem
-          key="summary"
+          key="chatbot"
           disablePadding
-          onClick={() => handleMenuBar("summary")}
+          onClick={() => handleMenuBar("chatbot")}
         >
           <ListItemButton>
             <ListItemIcon>
               <LightbulbOutlinedIcon sx={{ color: "#ffffff" }} />
             </ListItemIcon>
-            <ListItemText primary="AI Summary" />
+            <ListItemText primary="AI ChatBot" />
           </ListItemButton>
         </ListItem>
 
@@ -272,4 +272,4 @@ function ResponsiveDrawer(props) {
   );
 }
 
-export default ResponsiveDrawer;
+export default Content;

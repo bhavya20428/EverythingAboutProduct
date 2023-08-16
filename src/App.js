@@ -1,9 +1,9 @@
-import ResponsiveDrawer from './ResponsiveDrawer';
+import Content from './content';
 import './App.css';
 
 function App() {
   return (
-    <ResponsiveDrawer/>
+    <Content name={"HERBAL FACEWASH"}/>
   );
 }
 
