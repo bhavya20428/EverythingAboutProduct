@@ -124,6 +124,7 @@ contract ProductManagement is AccessControl{
         item.buyers.push(buyer);
     }
 
+    // @audit to be devugged 
     function getRatingOfItem(uint _serialNumber) external view itemExists(_serialNumber) returns (uint){
         Item memory item = getItem(_serialNumber);
         uint ratingSum=0;
