@@ -79,7 +79,10 @@ contract ProductManagement is AccessControl{
         return tokenIDCounter.current();
     }
 
-
+    function addReview(string memory review , uint _serialNumber) external onlyBuyer(_serialNumber) {
+        Item storage item = getItem(_serialNumber);
+        item.reviews.push(review);
+    }
     function addSeller(string memory _name, address _sellerAddress,uint _lat , uint _long) external onlyRole(DEFAULT_ADMIN_ROLE)  {
         require(addressToSeller[_sellerAddress].ID!=0 , "Seller already present");
         sellerIDCounter.increment();
