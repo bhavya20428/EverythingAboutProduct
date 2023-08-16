@@ -48,6 +48,19 @@ contract ProductManagement is AccessControl{
         require(serialToItem[_serialNumber].serialNumber != 0 , "The item doesnt exist");
         _;
     }
+    modifier onlyBuyer(uint _serialNumber){
+        bool isPresent = false;
+        Item memory item = serialToItem[_serialNumber];
+        address sender = msg.sender;
+        for(uint i=0;i<item.buyers.length;i++){
+            if(item.buyers[i] ==sender){
+                isPresent = true;
+                break;
+            }        
+               }
+        require(isPresent, "You are not the buyer of the item");
+        _;
+    }
 
     constructor(){
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -90,8 +103,13 @@ contract ProductManagement is AccessControl{
         delete addressToSeller[_sellerAddress];
     }
 
+    function addBuyer(address buyer , uint _serialNumber) external onlyRole(SELLER_ROLE) {
+        Item storage item = getItem(_serialNumber);
+        item.buyers.push(buyer);
+    }
+
     function getRatingOfItem(uint _serialNumber) external view itemExists(_serialNumber) returns (uint){
-        Item memory item = serialToItem[_serialNumber];
+        Item memory item = getItem(_serialNumber);
         uint ratingSum=0;
         mapping(address=>uint) storage map = itemRatings[_serialNumber];
 
@@ -101,8 +119,8 @@ contract ProductManagement is AccessControl{
         return ratingSum/item.ratingsAdded.length;
     }
 
-    function addRating(uint _serialNumber , uint rating) external  itemExists(_serialNumber) {
-        Item storage item = serialToItem[_serialNumber];
+    function addRating(uint _serialNumber , uint rating) external  itemExists(_serialNumber) onlyBuyer(_serialNumber) {
+        Item storage item = getItem(_serialNumber);
         bool addressPresent =false;
         address sender = msg.sender;
         for(uint i=0;i<item.ratingsAdded.length;i++){
