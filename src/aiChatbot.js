@@ -14,7 +14,7 @@ export default function AIChatbot(props) {
           component="div"
           sx={{ pb: 0, mb: 2, fontFamily: "Arial", fontWeight: 500 }}
         >
-          Generate AI Summary
+          AI Chatbot
         </Typography>
         <Divider sx={{ mb: 4 }}></Divider>
 
