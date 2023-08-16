@@ -19,10 +19,13 @@ export default function AIChatbot(props) {
         <Divider sx={{ mb: 4 }}></Divider>
 
         <gradio-app
-          src="https://bhavya8-gradiosample.hf.space"
+          // space="pravar02/sparkathon"
+          src="https://pravar02-sparkathon.hf.space"
           theme-mode="light"
           eager="true"
-          initial_height="0px"
+          height="1000"
+          container="false"
+          control_page_title="false"
         ></gradio-app>
       </Paper>
     </>
