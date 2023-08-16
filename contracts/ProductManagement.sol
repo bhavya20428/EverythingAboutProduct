@@ -84,7 +84,7 @@ contract ProductManagement is AccessControl{
         Item[] memory items = new Item[](n);
         for(uint i=1;i<=n;i++){
             Item memory item = getItem(i);
-            items[i] = item;
+            items[i-1] = item;
         }
         return items;
     }
@@ -97,6 +97,9 @@ contract ProductManagement is AccessControl{
         require(addressToSeller[_sellerAddress].ID==0 , "Seller already present");
         sellerIDCounter.increment();
         addressToSeller[_sellerAddress] = Seller(_name , sellerIDCounter.current() , _sellerAddress , Location(_lat , _long)) ;
+        grantRole(SELLER_ROLE , _sellerAddress);
+
+
     }
 
     function addItem(string memory _name ,  string memory _description) external  onlyRole(SELLER_ROLE) {
