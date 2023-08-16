@@ -79,6 +79,16 @@ contract ProductManagement is AccessControl{
         return tokenIDCounter.current();
     }
 
+    function getAllItems() public view returns(Item[] memory){
+        uint n = tokenIDCounter.current();
+        Item[] memory items = new Item[](n);
+        for(uint i=1;i<=n;i++){
+            Item memory item = getItem(i);
+            items[i] = item;
+        }
+        return items;
+    }
+
     function addReview(string memory review , uint _serialNumber) external onlyBuyer(_serialNumber) {
         Item storage item = getItem(_serialNumber);
         item.reviews.push(review);
