@@ -94,15 +94,15 @@ contract ProductManagement is AccessControl{
         item.reviews.push(review);
     }
     function addSeller(string memory _name, address _sellerAddress,uint _lat , uint _long) external onlyRole(DEFAULT_ADMIN_ROLE)  {
-        require(addressToSeller[_sellerAddress].ID!=0 , "Seller already present");
+        require(addressToSeller[_sellerAddress].ID==0 , "Seller already present");
         sellerIDCounter.increment();
         addressToSeller[_sellerAddress] = Seller(_name , sellerIDCounter.current() , _sellerAddress , Location(_lat , _long)) ;
     }
 
-    function addItem(string memory _name ,  uint _serialNumber  , string memory _description) external  onlyRole(SELLER_ROLE) {
-        require(serialToItem[_serialNumber].serialNumber!=0 , "The item already exists");
+    function addItem(string memory _name ,  string memory _description) external  onlyRole(SELLER_ROLE) {
+        
         tokenIDCounter.increment();
-        Item storage item  = serialToItem[_serialNumber];
+        Item storage item  = serialToItem[tokenIDCounter.current()];
         item.name = _name;
         item.serialNumber = tokenIDCounter.current();
         item.description = _description;
