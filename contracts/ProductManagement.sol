@@ -12,10 +12,10 @@ contract ProductManagement is AccessControl{
     Counters.Counter public tokenIDCounter;
     Counters.Counter public sellerIDCounter;
 
-    mapping(address => Seller) public addressToSeller;
-    mapping (uint => Item) public serialToItem;
-    mapping(address=> Item[]) sellerToItem;
-    mapping(uint => mapping(address=>uint)) itemRatings;
+    mapping(address => Seller) private  addressToSeller;
+    mapping (uint => Item) private serialToItem;
+    mapping(address=> Item[]) private sellerToItem;
+    mapping(uint => mapping(address=>uint)) private itemRatings;
 
     uint public constant RATING_DECIMAL = 100;
     bytes32 public constant SELLER_ROLE = keccak256("SELLER_ROLE");
@@ -37,10 +37,16 @@ contract ProductManagement is AccessControl{
     struct Item{
         string name;
         uint serialNumber;
-        uint totalRatings;
         string description;
         address []ratingsAdded;
+        string [] reviews;
+        address []buyers;
 
+    }
+
+    modifier itemExists(uint _serialNumber){
+        require(serialToItem[_serialNumber].serialNumber != 0 , "The item doesnt exist");
+        _;
     }
 
     constructor(){
@@ -73,7 +79,6 @@ contract ProductManagement is AccessControl{
         Item storage item  = serialToItem[_serialNumber];
         item.name = _name;
         item.serialNumber = tokenIDCounter.current();
-        item.totalRatings = 0;
         item.description = _description;
     }
 
@@ -85,11 +90,32 @@ contract ProductManagement is AccessControl{
         delete addressToSeller[_sellerAddress];
     }
 
-    function getRatingOfItem(uint _serialNumber) external returns (uint){
+    function getRatingOfItem(uint _serialNumber) external view itemExists(_serialNumber) returns (uint){
         Item memory item = serialToItem[_serialNumber];
-        uint ratingCount=0;
         uint ratingSum=0;
-        mapping temp = 
+        mapping(address=>uint) storage map = itemRatings[_serialNumber];
+
+        for(uint i=0;i<item.ratingsAdded.length;i++){
+            ratingSum+= map[item.ratingsAdded[i]];
+        }
+        return ratingSum/item.ratingsAdded.length;
+    }
+
+    function addRating(uint _serialNumber , uint rating) external  itemExists(_serialNumber) {
+        Item storage item = serialToItem[_serialNumber];
+        bool addressPresent =false;
+        address sender = msg.sender;
+        for(uint i=0;i<item.ratingsAdded.length;i++){
+            if(item.ratingsAdded[i] == sender){
+            addressPresent = true;
+            break;
+            }
+        }
+        if(addressPresent){
+            item.ratingsAdded.push(sender);
+        }
+        itemRatings[_serialNumber][sender] = rating*RATING_DECIMAL;
+
     }
 
     
