@@ -13,8 +13,6 @@ export default function AddReview(props) {
   const [rating, setRating] = React.useState(0);
 
   const addToComments = ()=>{
-    alert(review);
-    alert(rating);
     return;
   }
   
