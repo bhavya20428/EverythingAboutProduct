@@ -45,13 +45,15 @@
 // const { MNEMONIC, PROJECT_ID } = process.env;
 
 // const HDWalletProvider = require('@truffle/hdwallet-provider');
-
-mmodule.exports = {
+require("dotenv").config();
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const { INFURA_API_KEY, MNEMONIC } = process.env;
+module.exports = {
   networks: {
     development: {
       host: "127.0.0.1",
       port: 8545,
-      network_id: "*" // Match any network id
+      network_id: "1" // Match any network id
     }
   },
   compilers: {
