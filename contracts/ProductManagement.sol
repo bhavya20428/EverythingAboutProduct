@@ -39,6 +39,7 @@ contract ProductManagement is AccessControl{
         uint serialNumber;
         string description;
         address []ratingsAdded;
+        uint ratingSum;
         string [] reviews;
         address []buyers;
 
@@ -113,6 +114,7 @@ contract ProductManagement is AccessControl{
 
     function removeItem(uint _serialNumber) external onlyRole(DEFAULT_ADMIN_ROLE){
         delete serialToItem[_serialNumber];
+        tokenIDCounter.decrement();
     }
 
     function removeSeller(address _sellerAddress) external onlyRole(DEFAULT_ADMIN_ROLE){
@@ -128,10 +130,8 @@ contract ProductManagement is AccessControl{
     function getRatingOfItem(uint _serialNumber) external view itemExists(_serialNumber) returns (uint){
         Item memory item = getItem(_serialNumber);
         uint ratingSum=0;
-        mapping(address=>uint) storage map = itemRatings[_serialNumber];
-
         for(uint i=0;i<item.ratingsAdded.length;i++){
-            ratingSum+= map[item.ratingsAdded[i]];
+            ratingSum+= itemRatings[_serialNumber][item.ratingsAdded[i]];
         }
         return ratingSum/item.ratingsAdded.length;
     }
@@ -146,7 +146,7 @@ contract ProductManagement is AccessControl{
             break;
             }
         }
-        if(addressPresent){
+        if(!addressPresent){
             item.ratingsAdded.push(sender);
         }
         itemRatings[_serialNumber][sender] = rating*RATING_DECIMAL;
