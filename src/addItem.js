@@ -5,17 +5,13 @@ import Divider from "@mui/material/Divider";
 import "@fontsource/roboto/300.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Rating from "@mui/material/Rating";
 
+export default function AddItem(props) {
+  const [itemId, setItemId] = React.useState("");
 
-export default function AddReview(props) {
-  const [review, setReview] = React.useState("");
-  const [rating, setRating] = React.useState(0);
-
-  const addToComments = ()=>{
+  const addToItems = () => {
     return;
-  }
-  
+  };
 
   return (
     <Paper square sx={{ p: 2, pb: "50px", boxShadow: 0 }}>
@@ -25,31 +21,20 @@ export default function AddReview(props) {
         component="div"
         sx={{ pb: 0, mb: 2, fontFamily: "Arial", fontWeight: 500 }}
       >
-        Add Review
+        Add Item
       </Typography>
       <Divider sx={{ mb: 4 }}></Divider>
-      <form onSubmit={addToComments}>
+      <form onSubmit={addToItems}>
         <TextField
-          id="newReview"
-          label="Review"
-          rows={4}
+          id="newItemId"
+          label="itemId"
+          rows={2}
+          fullWidth
           multiline
           margin="normal"
-          fullWidth
           required
           onChange={(event) => {
-            setReview(event.target.value);
-          }}
-        />
-        <br></br>
-
-        <Rating
-          name="simple-controlled"
-          size="large"
-          defaultValue={0}
-          precision={0.5}
-          onChange={(event, newValue) => {
-            setRating(newValue);
+            setItemId(event.target.value);
           }}
         />
         <br></br>
@@ -69,7 +54,7 @@ export default function AddReview(props) {
             boxShadow: 0,
           }}
         >
-          ADD REVIEW
+          Add Item
         </Button>
       </form>
     </Paper>
