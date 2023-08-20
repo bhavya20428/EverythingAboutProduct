@@ -19,9 +19,9 @@ import AddSeller from "./addSeller";
 import { NavLink } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { ethers } from "ethers";
-
+import abi from './abi.json';
 // Contract address of the deployed smart contract
-const contractAddress = "0xD2DFf998Ad3B205DC60001C5565498Ff7a6f4b3B";
+const contractAddress = "0x84b8B40bD7fc3c0BDdfc0d381Ff5BFe370585c28";
 
 
 const drawerWidth = 240;
@@ -31,14 +31,16 @@ export default function Admin(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [mainContent, setMainContent] = React.useState(<Sellers />);
   const [walletAddress, setWalletAddress] = React.useState("");
-
+  const [provider , setProvider] = React.useState("");
+  const [signer , setSigner] = React.useState("");
   React.useEffect(() => {
     (async () => {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const address = await provider.send("eth_requestAccounts", []);
+      setProvider(provider);
       setWalletAddress(address);
-
-      const signer = provider.getSigner();
+      setSigner(provider.getSigner())
+      readData();
     })();
 
     return () => {
@@ -48,6 +50,11 @@ export default function Admin(props) {
  
 
   const { windowDisplay } = props;
+  async function  readData(){
+    const contract= new ethers.Contract(contractAddress , abi , provider);
+    const itemCount = await contract.testerFunction();
+    console.log(itemCount);
+  }
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
