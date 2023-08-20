@@ -5,42 +5,19 @@ import Divider from "@mui/material/Divider";
 import "@fontsource/roboto/300.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { ethers } from "ethers";
-import abi from './abi.json';
-// Contract address of the deployed smart contract
-const contractAddress = "0x84b8B40bD7fc3c0BDdfc0d381Ff5BFe370585c28";
+
 export default function AddSeller(props) {
   const [sellerWalletId, setSellerWalletId] = React.useState("");
-
-
-  const [walletAddress, setWalletAddress] = React.useState("");
-  const [provider , setProvider] = React.useState("");
-  const [signer , setSigner] = React.useState("");
-  const [contract , setContract] = React.useState("");
-  React.useEffect(() => {
-    (async () => {
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const address = await provider.send("eth_requestAccounts", []);
-      setProvider(provider);
-      setWalletAddress(address);
-      setSigner(provider.getSigner())
-      const contract= new ethers.Contract(contractAddress , abi , provider);
-      setContract(contract);
+  const contract=props["contract"];
+  
+  const  submit = (event) => {
+      event.preventDefault();
       console.log(contract);
-      // readData();
-      
-    })();
 
-    return () => {
-      // this now gets called when the component unmounts
-    };
-  }, []);
- 
-   const  submit = () => {
   
       (async () => {
-        const transaction = await contract.addSeller("name" , walletAddress , 100 , 100);
-        await transaction.wait();
+        const transaction = (await contract.testerFunction());
+        console.log(transaction);
       })();
 
     return;
