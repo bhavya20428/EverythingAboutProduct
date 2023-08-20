@@ -33,6 +33,8 @@ export default function Admin(props) {
   const [walletAddress, setWalletAddress] = React.useState("");
   const [provider , setProvider] = React.useState("");
   const [signer , setSigner] = React.useState("");
+  const [contract , setContract] = React.useState("");
+  const [sellerAddress , setSellerAddress] = React.useState("");
   React.useEffect(() => {
     (async () => {
       const provider = new ethers.BrowserProvider(window.ethereum);
@@ -40,7 +42,11 @@ export default function Admin(props) {
       setProvider(provider);
       setWalletAddress(address);
       setSigner(provider.getSigner())
-      readData();
+      const contract= new ethers.Contract(contractAddress , abi , provider);
+      setContract(contract);
+      console.log(contract);
+      // readData();
+      
     })();
 
     return () => {
@@ -50,10 +56,8 @@ export default function Admin(props) {
  
 
   const { windowDisplay } = props;
-  async function  readData(){
-    const contract= new ethers.Contract(contractAddress , abi , provider);
-    const itemCount = await contract.testerFunction();
-    console.log(itemCount);
+  async function  addSeller(){
+    const transaction = await contract.addSeller("name" , );
   }
 
   const handleDrawerToggle = () => {
