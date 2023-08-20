@@ -41,13 +41,11 @@ export default function Admin(props) {
       setProvider(provider);
       setWalletAddress(address);
       setSigner(provider.getSigner());
-      const contract = new ethers.Contract(contractAddress, abi, provider);
-      setContract(contract);
+      const contracts = new ethers.Contract(contractAddress, abi, provider);
+      setContract(contracts);
     })();
 
-    return () => {
-      // this now gets called when the component unmounts
-    };
+    return () => {};
   }, []);
 
   const { windowDisplay } = props;
@@ -58,7 +56,7 @@ export default function Admin(props) {
 
   const handleMenuBar = (key) => {
     if (key === "sellers") {
-      setMainContent(<Sellers />);
+      setMainContent(<Sellers contract={contract} />);
     } else if (key === "addSeller") {
       setMainContent(<AddSeller contract={contract} />);
     }

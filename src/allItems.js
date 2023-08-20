@@ -13,8 +13,8 @@ export default function AllItems(props) {
   const contract = props["contract"];
 
   async function readData() {
-    // const mainData = await contract.getAllItems();
-    console.log(await contract.getAllItems()[0].description);
+    console.log(contract);
+    console.log((await contract.getAllItems())[0].description);
   }
 
   readData();

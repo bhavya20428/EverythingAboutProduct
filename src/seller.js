@@ -19,8 +19,10 @@ import AddItem from "./addItem";
 import AddBuyer from "./addBuyer";
 import { NavLink } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-
-
+import { ethers } from "ethers";
+import abi from "./abi.json";
+// Contract address of the deployed smart contract
+const contractAddress = "0x6F993E29B0f357351068667FEFE5aC3F59d5C5db";
 
 
 const drawerWidth = 240;
@@ -29,8 +31,29 @@ export default function Seller(props) {
   
   const { windowDisplay } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const [walletAddress, setWalletAddress] = React.useState("");
+  const [provider, setProvider] = React.useState("");
+  const [signer, setSigner] = React.useState("");
+  const [contract, setContract] = React.useState("");
+  const [sellerAddress, setSellerAddress] = React.useState("");
+
+  React.useEffect(() => {
+    (async () => {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const address = await provider.send("eth_requestAccounts", []);
+      setProvider(provider);
+      setWalletAddress(address);
+      setSigner(provider.getSigner());
+      const contracts = new ethers.Contract(contractAddress, abi, provider);
+      setContract(contracts);
+    })();
+
+    return () => {};
+  }, []);
+
   const [mainContent, setMainContent] = React.useState(
-    <Items/>
+    ""
   );
 
   const handleDrawerToggle = () => {
@@ -39,11 +62,11 @@ export default function Seller(props) {
 
   const handleMenuBar = (key) => {
     if (key === "items") {
-      setMainContent(<Items />);
+      setMainContent(<Items contract={contract} />);
     } else if (key === "addItem") {
-      setMainContent(<AddItem />);
+      setMainContent(<AddItem contract={contract} />);
     } else if (key === "addBuyer") {
-      setMainContent(<AddBuyer />);
+      setMainContent(<AddBuyer contract={contract} />);
     }
   };
   const name="Unknown Seller";

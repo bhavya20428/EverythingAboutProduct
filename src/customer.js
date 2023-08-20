@@ -26,7 +26,7 @@ const drawerWidth = 240;
 export default function Customer(props) {
   const { windowDisplay } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [mainContent, setMainContent] = React.useState(<AllItems />);
+  const [mainContent, setMainContent] = React.useState("");
 
   const [walletAddress, setWalletAddress] = React.useState("");
   const [provider, setProvider] = React.useState("");
@@ -41,8 +41,8 @@ export default function Customer(props) {
       setProvider(provider);
       setWalletAddress(address);
       setSigner(provider.getSigner());
-      const contract = new ethers.Contract(contractAddress, abi, provider);
-      setContract(contract);
+      const contracts = new ethers.Contract(contractAddress, abi, provider);
+      setContract(contracts);
     })();
 
     return () => {};
@@ -74,7 +74,7 @@ export default function Customer(props) {
         <ListItem
           key="items"
           disablePadding
-          onClick={() => handleMenuBar("items")}
+          onClick={() => handleMenuBar("allItems")}
         >
           <ListItemButton>
             <ListItemIcon>
