@@ -7,9 +7,9 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 export default function AddSeller(props) {
-  const [sellerId, setSellerId] = React.useState("");
+  const [sellerWalletId, setSellerWalletId] = React.useState("");
 
-  const addToSellers = () => {
+  const submit = () => {
     return;
   };
 
@@ -24,17 +24,17 @@ export default function AddSeller(props) {
         Add Seller
       </Typography>
       <Divider sx={{ mb: 4 }}></Divider>
-      <form onSubmit={addToSellers}>
+      <form onSubmit={submit}>
         <TextField
-          id="newSellerId"
-          label="sellerId"
+          id="sellerWalletId"
+          label="sellerWalletId"
           rows={2}
           fullWidth
           multiline
           margin="normal"
           required
           onChange={(event) => {
-            setSellerId(event.target.value);
+            setSellerWalletId(event.target.value);
           }}
         />
         <br></br>
