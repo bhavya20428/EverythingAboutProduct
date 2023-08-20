@@ -11,24 +11,35 @@ import { NavLink } from "react-router-dom";
 
 export default function AllItems(props) {
   const contract = props["contract"];
+  const [info, setInfo]=React.useState([]);
 
-  async function readData() {
-    console.log(contract);
-    console.log((await contract.getAllItems())[0].description);
-  }
+  React.useEffect(()=>{
+    (async () => {
+      console.log(contract);
+      const data = (await contract.getAllItems());
+      let array=[]
+      data.map((item)=>{
+        console.log(item);
+        let price = item[1].toString();
+        let description = item.description;
+        let itemname = item.name;
+        array.push({
+          
+          primary: itemname,
+          description: description,
+          secondary: price,
+        });
+        return true;
+      });
+      
+      setInfo(array);
+    })();
 
-  readData();
+    return () => {};
 
-  const info = [
-    {
-      id: "1",
-      primary: "Natural Facewash",
-      secondary: "Rs. 50",
-      description: "People fgtrbb  tghyhy6",
-    },
-  ];
+  },[]);
 
-  const count = info.length;
+
 
   return (
     <Paper square sx={{ p: 2, pb: "50px", boxShadow: 0 }}>
@@ -38,7 +49,7 @@ export default function AllItems(props) {
         component="div"
         sx={{ pb: 0, mb: 2, fontFamily: "Arial", fontWeight: 500 }}
       >
-        Items ({count})
+        Items ({info.length})
       </Typography>
 
       <Divider sx={{ mb: 4 }}></Divider>
@@ -88,7 +99,7 @@ export default function AllItems(props) {
 
               <Grid container spacing={2} sx={{ mb: 3 }}>
                 <Grid item sm={6} xs={12}>
-                  <Typography variant="h6">{secondary}</Typography>
+                  <Typography variant="h6">Rs. {secondary}</Typography>
                 </Grid>
 
                 <Grid item sm={6} xs={12}>
