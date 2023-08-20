@@ -58,7 +58,7 @@ export default function Admin(props) {
     if (key === "sellers") {
       setMainContent(<Sellers contract={contract} />);
     } else if (key === "addSeller") {
-      setMainContent(<AddSeller contract={contract} />);
+      setMainContent(<AddSeller contract={contract} walletAddress = {walletAddress} signer = {signer} />);
     }
   };
 
