@@ -16,8 +16,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Items from "./items";
 import AddItem from "./addItem";
+import AddBuyer from "./addBuyer";
 import { NavLink } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+
 
 
 
@@ -37,9 +39,11 @@ export default function Seller(props) {
 
   const handleMenuBar = (key) => {
     if (key === "items") {
-      setMainContent(<Items/>);
+      setMainContent(<Items />);
     } else if (key === "addItem") {
       setMainContent(<AddItem />);
+    } else if (key === "addBuyer") {
+      setMainContent(<AddBuyer />);
     }
   };
   const name="Unknown Seller";
@@ -82,6 +86,18 @@ export default function Seller(props) {
             <ListItemText primary="Add Item" />
           </ListItemButton>
         </ListItem>
+        <ListItem
+          key="addBuyer"
+          disablePadding
+          onClick={() => handleMenuBar("addBuyer")}
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <AddCircleOutlineIcon sx={{ color: "#ffffff" }} />
+            </ListItemIcon>
+            <ListItemText primary="Add Buyer" />
+          </ListItemButton>
+        </ListItem>
         <NavLink class="navlink" to="/" exact>
           <ListItem key="logout" disablePadding>
             <ListItemButton>
@@ -90,7 +106,7 @@ export default function Seller(props) {
               </ListItemIcon>
               <ListItemText
                 primary="Logout"
-                sx={{ all: "unset", color: "#ffffff", textDecoration:"none",  }}
+                sx={{ all: "unset", color: "#ffffff", textDecoration: "none" }}
               />
             </ListItemButton>
           </ListItem>

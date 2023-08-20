@@ -3,13 +3,37 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import "@fontsource/roboto/300.css";
-import TextField from "@mui/material/TextField";
+import {
+  TextField,
+  FormControl,
+  MenuItem,
+  Select,
+  InputLabel,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 
-export default function AddItem(props) {
-  const [itemPrice, setItemPrice] = React.useState("");
-  const [itemDescription, setItemDescription] = React.useState("");
-  const [itemName, setItemName] = React.useState("");
+export default function AddBuyer(props) {
+  const [itemIds, setItemIds] = React.useState([]);
+  const [buyerWalletId, setBuyerWalletId] = React.useState("");
+  const items = [
+    { id: "1", name: "abc" },
+    { id: "2", name: "xyz" },
+  ];
+  
+
+  // React.useEffect(() => {
+  //   setItems([]);
+  // }, []);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setItemIds(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
 
   const submit = () => {
     return;
@@ -23,49 +47,39 @@ export default function AddItem(props) {
         component="div"
         sx={{ pb: 0, mb: 2, fontFamily: "Arial", fontWeight: 500 }}
       >
-        Add Item
+        Add Buyer
       </Typography>
       <Divider sx={{ mb: 4 }}></Divider>
       <form onSubmit={submit}>
+        <FormControl fullWidth>
+          <InputLabel id="itemChoose">Choose Item</InputLabel>
+          <Select
+            labelId="itemChoose"
+            id="setItemChoose"
+            multiple
+            value={itemIds}
+            onChange={handleChange}
+          >
+            {items.map(({ id, name }) => (
+              <MenuItem value={id}>{name}</MenuItem>
+            ))}
+           
+          </Select>
+        </FormControl>
        
-        <TextField
-          id="newItemName"
-          label="itemName"
-          rows={2}
-          fullWidth
-          multiline
-          margin="normal"
-          required
-          onChange={(event) => {
-            setItemName(event.target.value);
-          }}
-        />
+
         <br></br>
 
         <TextField
-          id="newItemDescription"
-          label="itemDescription"
+          id="newBuyerWalletId"
+          label="BuyerWalletId"
           rows={3}
           fullWidth
           multiline
           margin="normal"
           required
           onChange={(event) => {
-            setItemDescription(event.target.value);
-          }}
-        />
-        <br></br>
-
-        <TextField
-          id="newItemPrice"
-          label="itemPrice"
-          rows={1}
-          
-          multiline
-          margin="normal"
-          required
-          onChange={(event) => {
-            setItemPrice(event.target.value);
+            setBuyerWalletId(event.target.value);
           }}
         />
         <br></br>

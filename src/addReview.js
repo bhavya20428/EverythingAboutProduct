@@ -9,10 +9,11 @@ import Rating from "@mui/material/Rating";
 
 
 export default function AddReview(props) {
+  const [topic, setTopic] = React.useState("");
   const [review, setReview] = React.useState("");
   const [rating, setRating] = React.useState(0);
 
-  const addToComments = ()=>{
+  const submit = ()=>{
     return;
   }
   
@@ -28,7 +29,20 @@ export default function AddReview(props) {
         Add Review
       </Typography>
       <Divider sx={{ mb: 4 }}></Divider>
-      <form onSubmit={addToComments}>
+      <form onSubmit={submit}>
+        <TextField
+          id="newTopic"
+          label="Topic"
+          rows={2}
+          multiline
+          margin="normal"
+          fullWidth
+          required
+          onChange={(event) => {
+            setTopic(event.target.value);
+          }}
+        />
+        <br></br>
         <TextField
           id="newReview"
           label="Review"

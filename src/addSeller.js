@@ -26,7 +26,7 @@ export default function AddSeller(props) {
       <Divider sx={{ mb: 4 }}></Divider>
       <form onSubmit={submit}>
         <TextField
-          id="sellerWalletId"
+          id="newSellerWalletId"
           label="sellerWalletId"
           rows={2}
           fullWidth
