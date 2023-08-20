@@ -28,6 +28,11 @@
 				"internalType": "string",
 				"name": "_description",
 				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
 			}
 		],
 		"name": "addItem",
@@ -362,6 +367,11 @@
 						"internalType": "struct ProductManagement.Reviews[]",
 						"name": "allReviews",
 						"type": "tuple[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
 					}
 				],
 				"internalType": "struct ProductManagement.Item[]",

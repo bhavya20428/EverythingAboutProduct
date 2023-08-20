@@ -37,6 +37,9 @@ export default function Seller(props) {
   const [signer, setSigner] = React.useState("");
   const [contract, setContract] = React.useState("");
   const [sellerAddress, setSellerAddress] = React.useState("");
+  const [mainContent, setMainContent] = React.useState(
+    ""
+  );
 
   React.useEffect(() => {
     (async () => {
@@ -52,9 +55,6 @@ export default function Seller(props) {
     return () => {};
   }, []);
 
-  const [mainContent, setMainContent] = React.useState(
-    ""
-  );
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
