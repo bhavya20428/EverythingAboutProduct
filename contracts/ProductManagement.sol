@@ -15,7 +15,7 @@ contract ProductManagement is AccessControl{
     mapping(address => Seller) private  addressToSeller;
     mapping (uint => Item) private serialToItem;
     mapping(address=> Item[]) private sellerToItem;
-    mapping(uint => mapping(address=>uint)) private itemRatings;
+    mapping(uint => mapping(address=>Reviews)) private itemRatings;
 
     uint public constant RATING_DECIMAL = 100;
     bytes32 public constant SELLER_ROLE = keccak256("SELLER_ROLE");
@@ -31,7 +31,6 @@ contract ProductManagement is AccessControl{
         address sellerAddress;
         Location cordinates;
 
-
     }
 
     struct Item{
@@ -42,7 +41,14 @@ contract ProductManagement is AccessControl{
         uint ratingSum;
         string [] reviews;
         address []buyers;
+        Reviews []allReviews;
 
+    }
+
+    struct Reviews{
+        string topic;
+        string review;
+        uint rating;
     }
 
     modifier itemExists(uint _serialNumber){
@@ -89,17 +95,16 @@ contract ProductManagement is AccessControl{
         }
         return items;
     }
-
     function addReview(string memory review , uint _serialNumber) external onlyBuyer(_serialNumber) {
         Item storage item = getItem(_serialNumber);
         item.reviews.push(review);
+
     }
     function addSeller(string memory _name, address _sellerAddress,uint _lat , uint _long) external onlyRole(DEFAULT_ADMIN_ROLE)  {
         require(addressToSeller[_sellerAddress].ID==0 , "Seller already present");
         sellerIDCounter.increment();
         addressToSeller[_sellerAddress] = Seller(_name , sellerIDCounter.current() , _sellerAddress , Location(_lat , _long)) ;
         grantRole(SELLER_ROLE , _sellerAddress);
-
 
     }
 
@@ -131,7 +136,7 @@ contract ProductManagement is AccessControl{
         Item memory item = getItem(_serialNumber);
         uint ratingSum=0;
         for(uint i=0;i<item.ratingsAdded.length;i++){
-            ratingSum+= itemRatings[_serialNumber][item.ratingsAdded[i]];
+            ratingSum+= itemRatings[_serialNumber][item.ratingsAdded[i]].rating;
         }
         return ratingSum/item.ratingsAdded.length;
     }
@@ -149,8 +154,29 @@ contract ProductManagement is AccessControl{
         if(!addressPresent){
             item.ratingsAdded.push(sender);
         }
-        itemRatings[_serialNumber][sender] = rating*RATING_DECIMAL;
+        itemRatings[_serialNumber][sender].rating = rating*RATING_DECIMAL;
 
+    }
+
+
+    function addReviews(uint _serialNumber , string  memory topic, string memory review, uint rating)   external itemExists(_serialNumber) onlyBuyer(_serialNumber){
+         Item storage item = getItem(_serialNumber);
+        bool addressPresent =false;
+        address sender = msg.sender;
+        for(uint i=0;i<item.ratingsAdded.length;i++){
+            if(item.ratingsAdded[i] == sender){
+            addressPresent = true;
+            break;
+            }
+        }
+        if(!addressPresent){
+            item.ratingsAdded.push(sender);
+        }
+         item.allReviews.push(Reviews(topic , review , rating));
+    }
+
+    function getAllReviews(uint _serialNumber) external view returns(Reviews[] memory){
+        return getItem(_serialNumber).allReviews;
     }
 
     
