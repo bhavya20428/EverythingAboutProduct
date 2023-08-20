@@ -18,6 +18,7 @@ import Sellers from "./sellers";
 import AddSeller from "./addSeller";
 import { NavLink } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import { ethers } from "ethers";
 
 // Contract address of the deployed smart contract
 const contractAddress = "0xD2DFf998Ad3B205DC60001C5565498Ff7a6f4b3B";
@@ -26,9 +27,27 @@ const contractAddress = "0xD2DFf998Ad3B205DC60001C5565498Ff7a6f4b3B";
 const drawerWidth = 240;
 
 export default function Admin(props) {
-  const { window } = props;
+  
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [mainContent, setMainContent] = React.useState(<Sellers />);
+  const [walletAddress, setWalletAddress] = React.useState("");
+
+  React.useEffect(() => {
+    (async () => {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const address = await provider.send("eth_requestAccounts", []);
+      setWalletAddress(address);
+
+      const signer = provider.getSigner();
+    })();
+
+    return () => {
+      // this now gets called when the component unmounts
+    };
+  }, []);
+ 
+
+  const { windowDisplay } = props;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -99,7 +118,7 @@ export default function Admin(props) {
   );
 
   const container =
-    window !== undefined ? () => window().document.body : undefined;
+    windowDisplay !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>

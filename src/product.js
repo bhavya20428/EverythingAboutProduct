@@ -26,7 +26,7 @@ const drawerWidth = 240;
 function Product(props) {
   
 
-  const { window } = props;
+  const { windowDisplay } = props;
   const {id}=useParams();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [mainContent, setMainContent] = React.useState(
@@ -102,7 +102,7 @@ function Product(props) {
     </div>);
 
   const container =
-    window !== undefined ? () => window().document.body : undefined;
+    windowDisplay !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>

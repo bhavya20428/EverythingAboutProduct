@@ -21,7 +21,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 const drawerWidth = 240;
 
 export default function Customer(props) {
-  const { window } = props;
+  const { windowDisplay } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [mainContent, setMainContent] = React.useState(<AllItems />);
 
@@ -79,7 +79,7 @@ export default function Customer(props) {
   );
 
   const container =
-    window !== undefined ? () => window().document.body : undefined;
+    windowDisplay !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>
