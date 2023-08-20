@@ -5,10 +5,19 @@ import Box from '@mui/material/Box';
 import {
   NavLink
 } from "react-router-dom";
+import {ethers} from "ethers";
+// Contract address of the deployed smart contract
+const contractAddress = "0xD2DFf998Ad3B205DC60001C5565498Ff7a6f4b3B";
 
-export default function Signin(){
-
-
+async function getAddress(){
+  const provider = new ethers.BrowserProvider(window.ethereum)
+  const walletAddres =  await provider.send("eth_requestAccounts", []);
+  console.log(walletAddres);
+const signer = provider.getSigner()
+return walletAddres;
+}
+export default  function Signin(){
+  const walletAddress = getAddress();
     const buttons = [
       <NavLink class="navlink" to="/admin" exact>
         <Button

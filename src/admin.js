@@ -19,6 +19,10 @@ import AddSeller from "./addSeller";
 import { NavLink } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
+// Contract address of the deployed smart contract
+const contractAddress = "0xD2DFf998Ad3B205DC60001C5565498Ff7a6f4b3B";
+
+
 const drawerWidth = 240;
 
 export default function Admin(props) {
