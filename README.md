@@ -68,3 +68,55 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Bounties
+1). To Infura and Beyond:
+• README should detail what the project is, what it aims to accomplish, and proof of what Consensys products you used
+-> What the project is:
+We have developed a product that utilizes blockchain technology to store product reviews and generative AI to extract meaningful information from those reviews. This allows the customers to access helpful information about a product before making a purchase, helping them make informed decisions.
+
+-> What it aims to accomplish:
+Customers find it difficult to get proper product reviews in offline stores instantly. They rely on the information provided by staff or need to search on the net manually. This is a bad user experience. Moreover, irrespective of the medium online or offline, they don't want to waste time reading hundreds of reviews and making some sense of it. Lastly, they also have trust issues regarding the authenticity of the reviews present on the product. Our solution aims to solve all these problems.
+
+-> proof of what Consensys products you used:
+
+2). Mobile Fun with MetaMask SDK: 
+• README should detail what the project is and what it aims to accomplish
+-> What the project is:
+We have developed a product that utilizes blockchain technology to store product reviews and generative AI to extract meaningful information from those reviews. This allows the customers to access helpful information about a product before making a purchase, helping them make informed decisions.
+
+-> What it aims to accomplish:
+Customers find it difficult to get proper product reviews in offline stores instantly. They rely on the information provided by staff or need to search on the net manually. This is a bad user experience. Moreover, irrespective of the medium online or offline, they don't want to waste time reading hundreds of reviews and making some sense of it. Lastly, they also have trust issues regarding the authenticity of the reviews present on the product. Our solution aims to solve all these problems.
+
+• Demonstrated usage of the MetaMask SDK in your code
+
+
+3). IYKYK Linea edition:
+• README should detail what the project is, what it aims to accomplish, and steps to run it locally
+-> What the project is:
+We have developed a product that utilizes blockchain technology to store product reviews and generative AI to extract meaningful information from those reviews. This allows the customers to access helpful information about a product before making a purchase, helping them make informed decisions.
+
+-> What it aims to accomplish:
+Customers find it difficult to get proper product reviews in offline stores instantly. They rely on the information provided by staff or need to search on the net manually. This is a bad user experience. Moreover, irrespective of the medium online or offline, they don't want to waste time reading hundreds of reviews and making some sense of it. Lastly, they also have trust issues regarding the authenticity of the reviews present on the product. Our solution aims to solve all these problems. 
+
+• A link to your deployed smart contract on blockscout
+
+• The Linea network configured in your Truffle, HardHat, or Foundry configuration
+
+
+4). OH SNAP!:
+• README file with instructions to test
+-> Instructions to test
+
+
+5). Make a Dapp That Slaps, No Cap: 
+• README should detail what the project is, what it aims to accomplish, and proof of what Consensys products you used
+
+-> What the project is:
+We have developed a product that utilizes blockchain technology to store product reviews and generative AI to extract meaningful information from those reviews. This allows the customers to access helpful information about a product before making a purchase, helping them make informed decisions.
+
+-> What it aims to accomplish:
+Customers find it difficult to get proper product reviews in offline stores instantly. They rely on the information provided by staff or need to search on the net manually. This is a bad user experience. Moreover, irrespective of the medium online or offline, they don't want to waste time reading hundreds of reviews and making some sense of it. Lastly, they also have trust issues regarding the authenticity of the reviews present on the product. Our solution aims to solve all these problems. 
+
+-> Proof of what Consensys products you used:
+
