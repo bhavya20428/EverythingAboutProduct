@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import { ethers } from "ethers";
 import abi from './abi.json';
 // Contract address of the deployed smart contract
-const contractAddress = "0x84b8B40bD7fc3c0BDdfc0d381Ff5BFe370585c28";
+const contractAddress = "0x6F993E29B0f357351068667FEFE5aC3F59d5C5db";
 export default function AddSeller(props) {
   const [sellerWalletId, setSellerWalletId] = React.useState("");
 
@@ -36,13 +36,16 @@ export default function AddSeller(props) {
     };
   }, []);
  
-   const  submit = () => {
-  
-      (async () => {
-        const transaction = await contract.addSeller("name" , walletAddress , 100 , 100);
-        await transaction.wait();
-      })();
-
+  async function submit(event) {
+    // event.preventDefault();
+    
+    // const transaction = await contract.addSeller(
+    //   "name",
+    //   walletAddress,
+    //   100,
+    //   100
+    // );
+    // await transaction.wait();
     return;
   };
 

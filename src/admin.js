@@ -21,7 +21,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { ethers } from "ethers";
 import abi from './abi.json';
 // Contract address of the deployed smart contract
-const contractAddress = "0x84b8B40bD7fc3c0BDdfc0d381Ff5BFe370585c28";
+const contractAddress = "0x6F993E29B0f357351068667FEFE5aC3F59d5C5db";
 
 
 const drawerWidth = 240;
@@ -45,7 +45,7 @@ export default function Admin(props) {
       const contract= new ethers.Contract(contractAddress , abi , provider);
       setContract(contract);
       console.log(contract);
-      // readData();
+      readData();
       
     })();
 
@@ -56,9 +56,14 @@ export default function Admin(props) {
  
 
   const { windowDisplay } = props;
+  async function readData(){
+    console.log(await contract.getItemCount() );
+  }
   async function  addSeller(){
     const transaction = await contract.addSeller("name" , );
   }
+
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

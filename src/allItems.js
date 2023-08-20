@@ -8,8 +8,41 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import "@fontsource/roboto/300.css";
 import { NavLink } from "react-router-dom";
-
+import { ethers } from "ethers";
+import abi from './abi.json';
+// Contract address of the deployed smart contract
+const contractAddress = "0x6F993E29B0f357351068667FEFE5aC3F59d5C5db";
 export default function AllItems() {
+  const [walletAddress, setWalletAddress] = React.useState("");
+  const [provider , setProvider] = React.useState("");
+  const [signer , setSigner] = React.useState("");
+  const [contract , setContract] = React.useState("");
+  const [sellerAddress , setSellerAddress] = React.useState("");
+  React.useEffect(() => {
+    (async () => {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const address = await provider.send("eth_requestAccounts", []);
+      setProvider(provider);
+      setWalletAddress(address);
+      setSigner(provider.getSigner())
+      const contract= new ethers.Contract(contractAddress , abi , provider);
+      setContract(contract);
+      console.log(contract);
+      readData();
+      
+    })();
+
+    return () => {
+      // this now gets called when the component unmounts
+    };
+  }, []);
+
+  async function  readData() {
+    // const mainData = await contract.getAllItems();
+    console.log(await contract.getAllItems()[0].description);
+
+  }
+ 
   const info = [
     { id: "1", primary: "Natural Facewash", secondary: "Rs. 50" },
   ];
