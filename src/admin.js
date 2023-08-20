@@ -35,6 +35,7 @@ export default function Admin(props) {
   const [signer , setSigner] = React.useState("");
   const [contract , setContract] = React.useState("");
   const [sellerAddress , setSellerAddress] = React.useState("");
+
   React.useEffect(() => {
     (async () => {
       const provider = new ethers.BrowserProvider(window.ethereum);
@@ -43,10 +44,7 @@ export default function Admin(props) {
       setWalletAddress(address);
       setSigner(provider.getSigner())
       const contract= new ethers.Contract(contractAddress , abi , provider);
-      setContract(contract);
-      console.log(contract);
-      readData();
-      
+      setContract(contract); 
     })();
 
     return () => {
@@ -56,14 +54,6 @@ export default function Admin(props) {
  
 
   const { windowDisplay } = props;
-  async function readData(){
-    console.log(await contract.getItemCount() );
-  }
-  async function  addSeller(){
-    const transaction = await contract.addSeller("name" , );
-  }
-
-
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -73,7 +63,7 @@ export default function Admin(props) {
     if (key === "sellers") {
       setMainContent(<Sellers />);
     } else if (key === "addSeller") {
-      setMainContent(<AddSeller />);
+      setMainContent(<AddSeller contract={contract} />);
     }
   };
 

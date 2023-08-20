@@ -10,7 +10,7 @@ import "@fontsource/roboto/300.css";
 import { NavLink } from "react-router-dom";
 
 export default function Items() {
-  const info = [{id:"1", primary: "Natural Facewash", secondary: "Rs. 50" }];
+  const info = [{id:"1", primary: "Natural Facewash", secondary: "Rs. 50",description:"Revrgbvrg rgbrgb " }];
   const count = info.length;
   return (
     <Paper square sx={{ p: 2, pb: "50px", boxShadow: 0 }}>
@@ -26,13 +26,13 @@ export default function Items() {
       <Divider sx={{ mb: 4 }}></Divider>
 
       <Grid container spacing={2} alignItems="center">
-        {info.map(({ id, primary, secondary }) => (
+        {info.map(({ id, primary, secondary,description }) => (
           <Card
             key={id}
             sx={{
               margin: 2,
               border: 0,
-              width: { sm: 250, xs: "90%" },
+              width: { sm: 300, xs: "90%" },
               borderRadius: 3,
               boxShadow: 2,
             }}
@@ -51,6 +51,21 @@ export default function Items() {
                 }}
               >
                 {primary}
+              </Typography>
+
+              <Typography
+                variant="body2"
+                component="div"
+                sx={{
+                  fontWeight: 700,
+                  mb: 2,
+                  height: 40,
+                  fontFamily: "Roboto",
+                  color: "#46474a",
+                  lineHeight: "1.5",
+                }}
+              >
+                {description}
               </Typography>
 
               <Grid container spacing={2} sx={{ mb: 3 }}>

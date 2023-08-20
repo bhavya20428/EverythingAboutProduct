@@ -44,7 +44,7 @@ export default function AllItems() {
   }
  
   const info = [
-    { id: "1", primary: "Natural Facewash", secondary: "Rs. 50" },
+    { id: "1", primary: "Natural Facewash", secondary: "Rs. 50", description: "People fgtrbb  tghyhy6" },
   ];
   const count = info.length;
   return (
@@ -61,13 +61,13 @@ export default function AllItems() {
       <Divider sx={{ mb: 4 }}></Divider>
 
       <Grid container spacing={2} alignItems="center">
-        {info.map(({ id, primary, secondary }) => (
+        {info.map(({ id, primary, secondary,description }) => (
           <Card
             key={id}
             sx={{
               margin: 2,
               border: 0,
-              width: { sm: 250, xs: "90%" },
+              width: { sm: 300, xs: "90%" },
               borderRadius: 3,
               boxShadow: 2,
             }}
@@ -86,6 +86,21 @@ export default function AllItems() {
                 }}
               >
                 {primary}
+              </Typography>
+
+              <Typography
+                variant="body2"
+                component="div"
+                sx={{
+                  fontWeight: 700,
+                  mb: 2,
+                  height: 40,
+                  fontFamily: "Roboto",
+                  color: "#46474a",
+                  lineHeight: "1.5",
+                }}
+              >
+                {description}
               </Typography>
 
               <Grid container spacing={2} sx={{ mb: 3 }}>
