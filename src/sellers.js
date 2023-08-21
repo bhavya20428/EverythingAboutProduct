@@ -23,11 +23,11 @@ export default function Sellers(props) {
   //        console.log(item);
 
   //        let walletId = item.walletId;
-  //        let sellerName = item.sellerName;
+  //        
         
   //        array.push({
   //          id: walletId,
-  //          primary: sellerName,
+  //         
            
   //        });
   //        return true;
