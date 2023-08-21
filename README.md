@@ -6,6 +6,10 @@ Open the directory where you want to install the repository and run **git clone 
 
 ## 2). Setting the repo 
 
+Go to the installed repo and in the terminal **run npm install** and make sure that meta mask extension is installed in the browser
+
+## 3). Running the Dapp
+
 Go to the installed repo and in the terminal **run npm start**
 
 # Bounties
@@ -13,6 +17,8 @@ Go to the installed repo and in the terminal **run npm start**
 
 **• justification of endpoints:** <br/>
 
+Infura Linea Testnet Endpoint has been used while creating and deploying it with Truffle  
+Endpoint : https://linea-goerli.infura.io/v3/dc976cf7c22b451496c9719fef85af97
 **• links to the files that include the integration:** <br/>
 
 ## 2). Mobile Fun with MetaMask SDK: 
@@ -35,10 +41,29 @@ Customers find it difficult to get proper product reviews in offline stores inst
 **• Steps to run it locally:** <br/>
 
 **• Link for deployed smart contract on blockscout:** <br/>
+https://explorer.goerli.linea.build/address/0x0b0615a0b71a20126CEf157dE230bcE07001eF89
 
 **• The Linea network configured in Truffle and HardHat:** <br/>
-
-
+```
+module.exports = {
+  networks: {
+    development: {
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "*" // Match any network id
+    },
+    linea: {
+      provider: () => new HDWalletProvider(MNEMONIC, INFURA_API_KEY),
+      network_id: '59140',
+    }
+  },
+  compilers: {
+    solc: {
+      version: "^0.8.0"
+    }
+  }
+};
+```
 ## 4). OH SNAP!:
 **• Instructions to test:** <br/>
 
