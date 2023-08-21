@@ -44,6 +44,7 @@ Customers find it difficult to get proper product reviews in offline stores inst
 https://explorer.goerli.linea.build/address/0x0b0615a0b71a20126CEf157dE230bcE07001eF89
 
 **• The Linea network configured in Truffle and HardHat:** <br/>
+'''
 module.exports = {
   networks: {
     development: {
@@ -62,7 +63,7 @@ module.exports = {
     }
   }
 };
-
+'''
 
 ## 4). OH SNAP!:
 **• Instructions to test:** <br/>
