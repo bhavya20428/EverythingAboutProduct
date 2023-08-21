@@ -9,11 +9,18 @@ import Button from "@mui/material/Button";
 import "@fontsource/roboto/300.css";
 import { NavLink } from "react-router-dom";
 import { BigNumber } from "@ethersproject/bignumber";
-
+import { MetaMaskSDK } from '@metamask/sdk';
 export default function AllItems(props) {
   const contract = props["contract"];
   const [info, setInfo]=React.useState([]);
+  const options = {
+    injectProvider: true,
+    communicationLayerPreference: 'webrtc',
+  };
+  // const MMSDK = new MetaMaskSDK(options);
 
+  // const provider =  detectEthereumProvider();
+  // console.log(provider);
   React.useEffect(()=>{
     (async () => {
       console.log(contract);
