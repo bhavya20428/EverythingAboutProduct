@@ -35,7 +35,7 @@ export default function AddBuyer(props) {
       value
     );
   };
-  const contractAddress = "0x6F993E29B0f357351068667FEFE5aC3F59d5C5db";
+  const contractAddress = "0x0b0615a0b71a20126CEf157dE230bcE07001eF89";
   // const contract=props["contract"];
   const [provider, setProvider] = React.useState("");
   const [signer, setSigner] = React.useState("");

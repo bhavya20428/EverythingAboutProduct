@@ -6,17 +6,44 @@ import "@fontsource/roboto/300.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
-
+import {ethers } from "ethers";
+import abi from'./abi.json';
+import { BigNumber} from "@ethersproject/bignumber";
 
 export default function AddReview(props) {
   const [topic, setTopic] = React.useState("");
   const [review, setReview] = React.useState("");
   const [rating, setRating] = React.useState(0);
 
-  const submit = ()=>{
-    return;
+  const contractAddress = "0x0b0615a0b71a20126CEf157dE230bcE07001eF89";
+  // const contract=props["contract"];
+  const [provider, setProvider] = React.useState("");
+  const [signer, setSigner] = React.useState("");
+
+  const [sellerAddress, setSellerAddress] = React.useState("");
+  async function setEverything(){
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const address = await provider.send("eth_requestAccounts", []);
+    const signer = await provider.getSigner();
+    setProvider(provider);
+    setSigner(signer);
   }
-  
+  React.useEffect(() => {
+    (async () => {
+     await setEverything();
+    })();
+  }, []);
+  const contract = new ethers.Contract(contractAddress , abi , signer);
+
+  const submit = (event) => {
+    event.preventDefault();
+    (async () => {
+    const transaction = await contract.addReviews(BigNumber.from(1).toString() ,topic ,review , rating );
+        console.log(transaction);
+      })();
+    return;
+  };
+
 
   return (
     <Paper square sx={{ p: 2, pb: "50px", boxShadow: 0 }}>
