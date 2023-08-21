@@ -14,7 +14,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Items from "./items";
+import AllItems from "./allItems";
 import AddItem from "./addItem";
 import AddBuyer from "./addBuyer";
 import { NavLink } from "react-router-dom";
@@ -62,7 +62,7 @@ export default function Seller(props) {
 
   const handleMenuBar = (key) => {
     if (key === "items") {
-      setMainContent(<Items contract={contract} />);
+      setMainContent(<AllItems contract={contract} />);
     } else if (key === "addItem") {
       setMainContent(<AddItem contract={contract} />);
     } else if (key === "addBuyer") {

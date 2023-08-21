@@ -8,6 +8,7 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import "@fontsource/roboto/300.css";
 import { NavLink } from "react-router-dom";
+import { BigNumber } from "@ethersproject/bignumber";
 
 export default function AllItems(props) {
   const contract = props["contract"];
@@ -20,11 +21,14 @@ export default function AllItems(props) {
       let array=[]
       data.map((item)=>{
         console.log(item);
-        let price = item[1].toString();
+        
+        let price = (item.price?item.price:10).toString();
         let description = item.description;
         let itemname = item.name;
+        let id=BigNumber.from(item.serialNumber).toString();
+       
         array.push({
-          
+          id: id,
           primary: itemname,
           description: description,
           secondary: price,
@@ -103,7 +107,7 @@ export default function AllItems(props) {
                 </Grid>
 
                 <Grid item sm={6} xs={12}>
-                  <NavLink class="navlink" to={`/product/${primary}`} exact>
+                  <NavLink class="navlink" to={`/product/${id}`} exact>
                     <Button
                       variant="contained"
                       sx={{

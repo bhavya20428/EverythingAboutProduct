@@ -18,6 +18,7 @@ import { NavLink } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { ethers } from "ethers";
 import abi from "./abi.json";
+
 // Contract address of the deployed smart contract
 const contractAddress = "0x6F993E29B0f357351068667FEFE5aC3F59d5C5db";
 

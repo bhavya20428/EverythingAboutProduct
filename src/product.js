@@ -19,19 +19,42 @@ import Reviews from "./reviews";
 import AIChatbot from "./aiChatbot";
 import AddReview from "./addReview";
 import { useParams } from "react-router-dom";
+import { ethers } from "ethers";
+import abi from "./abi.json";
+
+// Contract address of the deployed smart contract
+const contractAddress = "0x6F993E29B0f357351068667FEFE5aC3F59d5C5db";
 
 
 const drawerWidth = 240;
 
 function Product(props) {
+
+  const [walletAddress, setWalletAddress] = React.useState("");
+  const [provider, setProvider] = React.useState("");
+  const [signer, setSigner] = React.useState("");
+  const [contract, setContract] = React.useState("");
+  const [sellerAddress, setSellerAddress] = React.useState("");
+
+  React.useEffect(() => {
+    (async () => {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const address = await provider.send("eth_requestAccounts", []);
+      setProvider(provider);
+      setWalletAddress(address);
+      setSigner(provider.getSigner());
+      const contracts = new ethers.Contract(contractAddress, abi, provider);
+      setContract(contracts);
+    })();
+
+    return () => {};
+  }, []);
   
 
   const { windowDisplay } = props;
   const {id}=useParams();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [mainContent, setMainContent] = React.useState(
-    <Reviews reviews average={3.75} />
-  );
+  const [mainContent, setMainContent] = React.useState("");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -39,7 +62,7 @@ function Product(props) {
 
   const handleMenuBar = (key) => {
     if ( key  === "reviews") {
-      setMainContent(<Reviews reviews average={3.75}/>);
+      setMainContent(<Reviews reviews contract={contract}/>);
     } else if (key === "chatbot") {
       setMainContent(<AIChatbot />);
     } else if ( key  === "add") {

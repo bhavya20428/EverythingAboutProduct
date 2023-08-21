@@ -7,9 +7,35 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import "@fontsource/roboto/300.css";
 
-export default function Sellers() {
-  const info = [{id: "1",primary: "Mr. Akash", secondary: "awdnfwoe3"}] ;
-  const count= info.length;
+export default function Sellers(props) {
+   const contract = props["contract"];
+   const [info, setInfo] = React.useState([]);
+
+   React.useEffect(() => {
+     (async () => {
+       console.log(contract);
+       const data = await contract.getAllSellers();
+       let array = [];
+       data.map((item) => {
+         console.log(item);
+
+         let walletId = item.walletId;
+         let sellerName = item.sellerName;
+        
+         array.push({
+           id: walletId,
+           primary: sellerName,
+           
+         });
+         return true;
+       });
+
+       setInfo(array);
+     })();
+
+     return () => {};
+   }, []);
+
   return (
     <Paper square sx={{ p: 2, pb: "50px", boxShadow: 0 }}>
       <Typography
@@ -18,13 +44,13 @@ export default function Sellers() {
         component="div"
         sx={{ pb: 0, mb: 2, fontFamily: "Arial", fontWeight: 500 }}
       >
-        Verified Sellers ({count})
+        Verified Sellers ({info.length})
       </Typography>
 
       <Divider sx={{ mb: 4 }}></Divider>
 
       <Grid container spacing={2} alignItems="center">
-        {info.map(({ id, primary, secondary }) => (
+        {info.map(({ id, primary}) => (
           <Card
             key={id}
             sx={{
@@ -51,7 +77,7 @@ export default function Sellers() {
                 {primary}
               </Typography>
 
-              <Typography variant="h6">{secondary}</Typography>
+              <Typography variant="h6">{id}</Typography>
             </CardContent>
           </Card>
         ))}
