@@ -41,8 +41,27 @@ Customers find it difficult to get proper product reviews in offline stores inst
 **• Steps to run it locally:** <br/>
 
 **• Link for deployed smart contract on blockscout:** <br/>
+https://explorer.goerli.linea.build/address/0x0b0615a0b71a20126CEf157dE230bcE07001eF89
 
 **• The Linea network configured in Truffle and HardHat:** <br/>
+module.exports = {
+  networks: {
+    development: {
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "*" // Match any network id
+    },
+    linea: {
+      provider: () => new HDWalletProvider(MNEMONIC, INFURA_API_KEY),
+      network_id: '59140',
+    }
+  },
+  compilers: {
+    solc: {
+      version: "^0.8.0"
+    }
+  }
+};
 
 
 ## 4). OH SNAP!:
