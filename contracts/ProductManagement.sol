@@ -8,7 +8,6 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract ProductManagement is AccessControl{
     using Counters for Counters.Counter;
-
     Counters.Counter public tokenIDCounter;
     Counters.Counter public sellerIDCounter;
 
@@ -16,6 +15,7 @@ contract ProductManagement is AccessControl{
     mapping (uint => Item) private serialToItem;
     mapping(address=> Item[]) private sellerToItem;
     mapping(uint => mapping(address=>Reviews)) private itemRatings;
+    mapping(uint =>Seller) private uintToSeller;
 
     uint public constant RATING_DECIMAL = 100;
     bytes32 public constant SELLER_ROLE = keccak256("SELLER_ROLE");
@@ -42,6 +42,7 @@ contract ProductManagement is AccessControl{
         string [] reviews;
         address []buyers;
         Reviews []allReviews;
+        uint price;
 
     }
 
@@ -73,6 +74,9 @@ contract ProductManagement is AccessControl{
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(SELLER_ROLE, msg.sender);
     }
+    function testerFunction() external pure returns(uint ){
+        return 100;
+    }
 
     function getSeller(address _address) public view returns (Seller memory ){
         return addressToSeller[_address];
@@ -81,6 +85,20 @@ contract ProductManagement is AccessControl{
     function getItem(uint _serialNumber) internal view returns (Item storage){
         return serialToItem[_serialNumber];
     }
+
+    function getItems(uint _serialNumber) public view returns(Item memory){
+        return serialToItem[_serialNumber];
+    }
+
+    function getAllSellers() public view returns(Seller[] memory){
+        uint n = sellerIDCounter.current();
+        Seller[] memory sellers= new Seller[](n);
+        for(uint i=1;i<=n;i++){
+            sellers[i-1] = (uintToSeller[i]);
+        }
+        return sellers;
+    }
+
 
     function getItemCount() public view returns(uint){
         return tokenIDCounter.current();
@@ -104,17 +122,19 @@ contract ProductManagement is AccessControl{
         require(addressToSeller[_sellerAddress].ID==0 , "Seller already present");
         sellerIDCounter.increment();
         addressToSeller[_sellerAddress] = Seller(_name , sellerIDCounter.current() , _sellerAddress , Location(_lat , _long)) ;
+        uintToSeller[sellerIDCounter.current()] = Seller(_name , sellerIDCounter.current() , _sellerAddress , Location(_lat , _long)) ;
         grantRole(SELLER_ROLE , _sellerAddress);
 
     }
 
-    function addItem(string memory _name ,  string memory _description) external  onlyRole(SELLER_ROLE) {
+    function addItem(string memory _name ,  string memory _description , uint price) external  onlyRole(SELLER_ROLE) {
         
         tokenIDCounter.increment();
         Item storage item  = serialToItem[tokenIDCounter.current()];
         item.name = _name;
         item.serialNumber = tokenIDCounter.current();
         item.description = _description;
+        item.price= price;
     }
 
     function removeItem(uint _serialNumber) external onlyRole(DEFAULT_ADMIN_ROLE){
@@ -134,6 +154,9 @@ contract ProductManagement is AccessControl{
     // @audit to be devugged 
     function getRatingOfItem(uint _serialNumber) external view itemExists(_serialNumber) returns (uint){
         Item memory item = getItem(_serialNumber);
+        if(item.ratingsAdded.length == 0){
+            return 0;
+        }
         uint ratingSum=0;
         for(uint i=0;i<item.ratingsAdded.length;i++){
             ratingSum+= itemRatings[_serialNumber][item.ratingsAdded[i]].rating;
@@ -173,11 +196,14 @@ contract ProductManagement is AccessControl{
             item.ratingsAdded.push(sender);
         }
          item.allReviews.push(Reviews(topic , review , rating));
+         itemRatings[_serialNumber][msg.sender].rating = rating*RATING_DECIMAL;
+         
     }
 
     function getAllReviews(uint _serialNumber) external view returns(Reviews[] memory){
         return getItem(_serialNumber).allReviews;
     }
+
 
     
 }
