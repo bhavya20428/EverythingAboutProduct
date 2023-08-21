@@ -35,6 +35,8 @@ function Product(props) {
   const [signer, setSigner] = React.useState("");
   const [contract, setContract] = React.useState("");
   const [sellerAddress, setSellerAddress] = React.useState("");
+  const { id } = useParams();
+  const [productName, setProductName]=React.useState("");
 
   React.useEffect(() => {
     (async () => {
@@ -45,6 +47,8 @@ function Product(props) {
       setSigner(provider.getSigner());
       const contracts = new ethers.Contract(contractAddress, abi, provider);
       setContract(contracts);
+      setProductName((await contract.getItem(id))["name"]);
+
     })();
 
     return () => {};
@@ -52,7 +56,7 @@ function Product(props) {
   
 
   const { windowDisplay } = props;
-  const {id}=useParams();
+ 
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [mainContent, setMainContent] = React.useState("");
 
@@ -81,7 +85,7 @@ function Product(props) {
           component="div"
           sx={{ fontWeight: "700" ,letterSpacing:2,m:2}}
         >
-          {id}
+          {productName}
         </Typography>
       </Toolbar>
       {/* <Divider sx={{ backgroundColor: "#ffffff" }} /> */}
