@@ -11,9 +11,11 @@ import {
   InputLabel,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-
+import {ethers } from "ethers";
+import abi from'./abi.json';
+import { BigNumber} from "@ethersproject/bignumber";
 export default function AddBuyer(props) {
-  const [itemIds, setItemIds] = React.useState([]);
+  const [itemId, setItemId] = React.useState(0);
   const [buyerWalletId, setBuyerWalletId] = React.useState("");
   const items = [
     { id: "1", name: "abc" },
@@ -29,13 +31,36 @@ export default function AddBuyer(props) {
     const {
       target: { value },
     } = event;
-    setItemIds(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
+    setItemId(
+      value
     );
   };
+  const contractAddress = "0x6F993E29B0f357351068667FEFE5aC3F59d5C5db";
+  // const contract=props["contract"];
+  const [provider, setProvider] = React.useState("");
+  const [signer, setSigner] = React.useState("");
 
-  const submit = () => {
+  const [sellerAddress, setSellerAddress] = React.useState("");
+  async function setEverything(){
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const address = await provider.send("eth_requestAccounts", []);
+    const signer = await provider.getSigner();
+    setProvider(provider);
+    setSigner(signer);
+  }
+  React.useEffect(() => {
+    (async () => {
+     await setEverything();
+    })();
+  }, []);
+  const contract = new ethers.Contract(contractAddress , abi , signer);
+
+  const submit = (event) => {
+    event.preventDefault();
+    (async () => {
+    const transaction = await contract.addBuyer(buyerWalletId, BigNumber.from(itemId).toString());
+        console.log(transaction);
+      })();
     return;
   };
 
@@ -56,8 +81,7 @@ export default function AddBuyer(props) {
           <Select
             labelId="itemChoose"
             id="setItemChoose"
-            multiple
-            value={itemIds}
+            value={itemId}
             onChange={handleChange}
           >
             {items.map(({ id, name }) => (

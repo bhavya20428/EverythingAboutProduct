@@ -5,13 +5,40 @@ import Divider from "@mui/material/Divider";
 import "@fontsource/roboto/300.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-
+import {ethers } from "ethers";
+import abi from'./abi.json';
+import { BigNumber} from "@ethersproject/bignumber";
 export default function AddItem(props) {
-  const [itemPrice, setItemPrice] = React.useState("");
+  const [itemPrice, setItemPrice] = React.useState(0);
   const [itemDescription, setItemDescription] = React.useState("");
   const [itemName, setItemName] = React.useState("");
+  const [sellerWalletId, setSellerWalletId] = React.useState("");
+  const contractAddress = "0x6F993E29B0f357351068667FEFE5aC3F59d5C5db";
+  // const contract=props["contract"];
+  const [provider, setProvider] = React.useState("");
+  const [signer, setSigner] = React.useState("");
 
-  const submit = () => {
+  const [sellerAddress, setSellerAddress] = React.useState("");
+  async function setEverything(){
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const address = await provider.send("eth_requestAccounts", []);
+    const signer = await provider.getSigner();
+    setProvider(provider);
+    setSigner(signer);
+  }
+  React.useEffect(() => {
+    (async () => {
+     await setEverything();
+    })();
+  }, []);
+  const contract = new ethers.Contract(contractAddress , abi , signer);
+
+  const submit = (event) => {
+    event.preventDefault();
+    (async () => {
+    const transaction = await contract.addItem(itemName ,itemDescription , BigNumber.from(itemPrice).toString());
+        console.log(transaction);
+      })();
     return;
   };
 
