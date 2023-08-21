@@ -11,56 +11,73 @@ import {
   InputLabel,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import {ethers } from "ethers";
-import abi from'./abi.json';
-import { BigNumber} from "@ethersproject/bignumber";
+import { ethers } from "ethers";
+import abi from "./abi.json";
+import { BigNumber } from "@ethersproject/bignumber";
+
 export default function AddBuyer(props) {
   const [itemId, setItemId] = React.useState(0);
   const [buyerWalletId, setBuyerWalletId] = React.useState("");
-  const items = [
-    { id: "1", name: "abc" },
-    { id: "2", name: "xyz" },
-  ];
-  
-
-  // React.useEffect(() => {
-  //   setItems([]);
-  // }, []);
+  const [items, setItems] = React.useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setItemId(
-      value
-    );
+    setItemId(value);
   };
+
   const contractAddress = "0x0b0615a0b71a20126CEf157dE230bcE07001eF89";
+
   // const contract=props["contract"];
   const [provider, setProvider] = React.useState("");
   const [signer, setSigner] = React.useState("");
-
   const [sellerAddress, setSellerAddress] = React.useState("");
-  async function setEverything(){
+  const [contract,setContract]=React.useState();
+
+  async function setEverything() {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const address = await provider.send("eth_requestAccounts", []);
     const signer = await provider.getSigner();
     setProvider(provider);
     setSigner(signer);
   }
+
   React.useEffect(() => {
     (async () => {
-     await setEverything();
+      await setEverything();
+      const contracts = new ethers.Contract(contractAddress, abi, signer);
+      setContract(contracts);
+      const data = await contracts.getAllItems();
+      let array = [];
+      data.map((item) => {
+        console.log(item);
+        let itemname = item.name;
+        let id = BigNumber.from(item.serialNumber).toString();
+
+        array.push({
+          id: id,
+          name: itemname, 
+        });
+        setItems(array);
+        return true;
+      });
+
+
     })();
   }, []);
-  const contract = new ethers.Contract(contractAddress , abi , signer);
+
+
 
   const submit = (event) => {
     event.preventDefault();
     (async () => {
-    const transaction = await contract.addBuyer(buyerWalletId, BigNumber.from(itemId).toString());
-        console.log(transaction);
-      })();
+      const transaction = await contract.addBuyer(
+        buyerWalletId,
+        BigNumber.from(itemId).toString()
+      );
+      console.log(transaction);
+    })();
     return;
   };
 
@@ -87,10 +104,8 @@ export default function AddBuyer(props) {
             {items.map(({ id, name }) => (
               <MenuItem value={id}>{name}</MenuItem>
             ))}
-           
           </Select>
         </FormControl>
-       
 
         <br></br>
 

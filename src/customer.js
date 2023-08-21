@@ -20,7 +20,7 @@ import { ethers } from "ethers";
 import abi from "./abi.json";
 
 // Contract address of the deployed smart contract
-const contractAddress = "0x6F993E29B0f357351068667FEFE5aC3F59d5C5db";
+const contractAddress = "0x0b0615a0b71a20126CEf157dE230bcE07001eF89";
 
 const drawerWidth = 240;
 

@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import { NavLink } from "react-router-dom";
 import { ethers } from "ethers";
 // Contract address of the deployed smart contract
-// const contractAddress = "0xD2DFf998Ad3B205DC60001C5565498Ff7a6f4b3B";
+// const contractAddress = "0x0b0615a0b71a20126CEf157dE230bcE07001eF89";
 
 export default function Signin() {
   const [walletAddress, setWalletAddress] = React.useState("");

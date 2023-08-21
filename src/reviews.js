@@ -23,7 +23,7 @@ export default function Reviews(props) {
 
       const data = await contract.getAllReviews(BigInt(id));
       console.log( await contract.getRatingOfItem(id))
-      setAverage(Number(await contract.getRatingOfItem(id)));
+      setAverage(Number(await contract.getRatingOfItem(id))/100.000);
 
       let array = [];
       data.map((item) => {

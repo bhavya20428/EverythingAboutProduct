@@ -8,36 +8,27 @@ import Divider from "@mui/material/Divider";
 import "@fontsource/roboto/300.css";
 
 export default function Sellers(props) {
-  //  const contract = props["contract"];
-   const [info, setInfo] = React.useState([
-     { id: "0x5B1C157D807879a5098C78bfd890b736BBE3238a" },
-     { id: "0x8A48d85d15d8BcdeF07c2F855CbEcDaDC774d5DE" },
-   ]);
+  const contract = props["contract"];
+  const [info, setInfo] = React.useState([]);
 
-  //  React.useEffect(() => {
-  //    (async () => {
-  //      console.log(contract);
-  //      const data = await contract.getAllSellers();
-  //      let array = [];
-  //      data.map((item) => {
-  //        console.log(item);
+  React.useEffect(() => {
+    (async () => {
+      const data = await contract.getAllSellers();
 
-  //        let walletId = item.walletId;
-  //        
-        
-  //        array.push({
-  //          id: walletId,
-  //         
-           
-  //        });
-  //        return true;
-  //      });
+      let array = [];
+      data.map((item) => {
+        array.push({
+          sellerAddress: item.sellerAddress,
+          id: item.id,
+        });
+        return true;
+      });
 
-  //      setInfo(array);
-  //    })();
+      setInfo(array);
+    })();
 
-  //    return () => {};
-  //  }, []);
+    return () => {};
+  }, []);
 
   return (
     <Paper square sx={{ p: 2, pb: "50px", boxShadow: 0 }}>
@@ -53,7 +44,7 @@ export default function Sellers(props) {
       <Divider sx={{ mb: 4 }}></Divider>
 
       <Grid container spacing={2} alignItems="center">
-        {info.map(({ id}) => (
+        {info.map(({ id, sellerAddress }) => (
           <Card
             key={id}
             sx={{
@@ -62,7 +53,7 @@ export default function Sellers(props) {
               width: { sm: 300, xs: "90%" },
               borderRadius: 3,
               boxShadow: 2,
-              wordWrap:"normal"
+              wordWrap: "break-word",
             }}
           >
             <CardContent>
@@ -78,7 +69,7 @@ export default function Sellers(props) {
                   lineHeight: "1.5",
                 }}
               >
-                {id}
+                {sellerAddress}
               </Typography>
 
               {/* <Typography variant="h6">{id}</Typography> */}

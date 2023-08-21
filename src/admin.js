@@ -27,7 +27,7 @@ const drawerWidth = 240;
 
 export default function Admin(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [mainContent, setMainContent] = React.useState(<Sellers />);
+  const [mainContent, setMainContent] = React.useState("");
   const [walletAddress, setWalletAddress] = React.useState("");
   const [provider, setProvider] = React.useState("");
   const [signer, setSigner] = React.useState("");
