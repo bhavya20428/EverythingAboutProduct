@@ -23,11 +23,10 @@ export default function AllItems(props) {
   // console.log(provider);
   React.useEffect(()=>{
     (async () => {
-      console.log(contract);
+    
       const data = (await contract.getAllItems());
       let array=[]
       data.map((item)=>{
-        console.log(item);
         
         let price = (item.price?item.price:10).toString();
         let description = item.description;

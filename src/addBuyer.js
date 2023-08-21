@@ -15,6 +15,7 @@ import { ethers } from "ethers";
 import abi from "./abi.json";
 import { BigNumber } from "@ethersproject/bignumber";
 
+
 export default function AddBuyer(props) {
   const [itemId, setItemId] = React.useState(0);
   const [buyerWalletId, setBuyerWalletId] = React.useState("");
@@ -33,9 +34,9 @@ export default function AddBuyer(props) {
   const [provider, setProvider] = React.useState("");
   const [signer, setSigner] = React.useState("");
   const [sellerAddress, setSellerAddress] = React.useState("");
-  const [contract,setContract]=React.useState();
+  
 
-  async function setEverything() {
+  async function setEverything(props) {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const address = await provider.send("eth_requestAccounts", []);
     const signer = await provider.getSigner();
@@ -46,9 +47,10 @@ export default function AddBuyer(props) {
   React.useEffect(() => {
     (async () => {
       await setEverything();
-      const contracts = new ethers.Contract(contractAddress, abi, signer);
-      setContract(contracts);
-      const data = await contracts.getAllItems();
+      
+      
+      
+      const data = await props["contract"].getAllItems();
       let array = [];
       data.map((item) => {
         console.log(item);
@@ -67,6 +69,7 @@ export default function AddBuyer(props) {
     })();
   }, []);
 
+  const contract = new ethers.Contract(contractAddress, abi, signer);
 
 
   const submit = (event) => {

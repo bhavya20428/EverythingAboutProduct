@@ -22,12 +22,13 @@ export default function Reviews(props) {
     (async () => {
 
       const data = await contract.getAllReviews(BigInt(id));
-      console.log( await contract.getRatingOfItem(id))
+      console.log(data);
       setAverage(Number(await contract.getRatingOfItem(id))/100.000);
 
       let array = [];
+      console.log(data);
       data.map((item) => {
-        console.log(item);
+       
         let topic = item.topic;
         let review = item.review;
         let rating = item.rating.toString();
@@ -93,7 +94,7 @@ export default function Reviews(props) {
       <Divider sx={{ mb: 4 }}></Divider>
 
       <Grid container spacing={2} alignItems="center">
-        {info.map(({ id, primary, secondary, person, rating }) => (
+        {info.map(({ id, primary, secondary, rating }) => (
           <Card
             key={id}
             sx={{

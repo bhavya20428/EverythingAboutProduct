@@ -69,7 +69,7 @@ export default function Seller(props) {
       setMainContent(<AddBuyer contract={contract} />);
     }
   };
-  const name="Unknown Seller";
+  const name="Seller";
 
   const drawer = (
     <div>

@@ -8,9 +8,12 @@ import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import {ethers } from "ethers";
 import abi from'./abi.json';
+import { useParams } from "react-router-dom";
 import { BigNumber} from "@ethersproject/bignumber";
+/* global BigInt */
 
 export default function AddReview(props) {
+  const { id } = useParams();
   const [topic, setTopic] = React.useState("");
   const [review, setReview] = React.useState("");
   const [rating, setRating] = React.useState(0);
@@ -38,8 +41,14 @@ export default function AddReview(props) {
   const submit = (event) => {
     event.preventDefault();
     (async () => {
-    const transaction = await contract.addReviews(BigNumber.from(1).toString() ,topic ,review , rating );
+      try{
+        const transaction = await contract.addReviews(BigInt(id) ,topic ,review , rating );
         console.log(transaction);
+      }
+      catch(err){
+        alert("You are not the Buyer for this item!");
+      }
+    
       })();
     return;
   };
@@ -88,7 +97,7 @@ export default function AddReview(props) {
           name="simple-controlled"
           size="large"
           defaultValue={0}
-          precision={0.5}
+          precision={1}
           onChange={(event, newValue) => {
             setRating(newValue);
           }}

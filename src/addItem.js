@@ -36,8 +36,15 @@ export default function AddItem(props) {
   const submit = (event) => {
     event.preventDefault();
     (async () => {
-    const transaction = await contract.addItem(itemName ,itemDescription , BigNumber.from(itemPrice).toString());
+      try{
+        const transaction = await contract.addItem(itemName ,itemDescription , BigNumber.from(itemPrice).toString());
         console.log(transaction);
+
+      }
+      catch(err){
+        alert("You are not a Verified Seller");
+      }
+    
       })();
     return;
   };
