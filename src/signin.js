@@ -4,11 +4,11 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import { NavLink } from "react-router-dom";
 import { ethers } from "ethers";
-// Contract address of the deployed smart contract
-// const contractAddress = "0x0b0615a0b71a20126CEf157dE230bcE07001eF89";
+
 
 export default function Signin() {
   const [walletAddress, setWalletAddress] = React.useState("");
+  
   const buttons = [
     <NavLink class="navlink" to="/admin" exact>
       <Button
@@ -64,22 +64,6 @@ export default function Signin() {
       </Button>
     </NavLink>,
   ];
-
-  // React.useEffect(() => {
-  //   (async () => {
-  //     const provider = new ethers.BrowserProvider(window.ethereum);
-  //     const address = await provider.send("eth_requestAccounts", []);
-  //     setWalletAddress(address);
-    
-  //     const signer = provider.getSigner();
-  //   })();
-
-  //   return () => {
-  //     // this now gets called when the component unmounts
-  //   };
-  // }, []);
-
-  // console.log(walletAddress);
 
   return (
     <Box
