@@ -19,19 +19,9 @@ Go to the installed repo and in the terminal **run npm start**
 
 Infura Linea Testnet Endpoint has been used while creating and deploying it with Truffle  
 Endpoint : https://linea-goerli.infura.io/v3/dc976cf7c22b451496c9719fef85af97
-**• links to the files that include the integration:** <br/>
-
-## 2). Mobile Fun with MetaMask SDK: 
-**• What the project is:** <br/>
-We have developed a product that utilizes blockchain technology to store product reviews and generative AI to extract meaningful information from those reviews. This allows the customers to access helpful information about a product before making a purchase, helping them make informed decisions.
-
-**• What it aims to accomplish:** <br/>
-Customers find it difficult to get proper product reviews in offline stores instantly. They rely on the information provided by staff or need to search on the net manually. This is a bad user experience. Moreover, irrespective of the medium online or offline, they don't want to waste time reading hundreds of reviews and making some sense of it. Lastly, they also have trust issues regarding the authenticity of the reviews present on the product. Our solution aims to solve all these problems.
-
-**• Demonstrated usage of the MetaMask SDK in code:** <br/>
 
 
-## 3). IYKYK Linea edition:
+## 2). IYKYK Linea edition:
 **• What the project is:** <br/>
 We have developed a product that utilizes blockchain technology to store product reviews and generative AI to extract meaningful information from those reviews. This allows the customers to access helpful information about a product before making a purchase, helping them make informed decisions.
 
@@ -64,11 +54,8 @@ module.exports = {
   }
 };
 ```
-## 4). OH SNAP!:
-**• Instructions to test:** <br/>
 
-
-## 5). Make a Dapp That Slaps, No Cap: 
+## 3). Make a Dapp That Slaps, No Cap: 
 **• What the project is:** <br/>
 We have developed a product that utilizes blockchain technology to store product reviews and generative AI to extract meaningful information from those reviews. This allows the customers to access helpful information about a product before making a purchase, helping them make informed decisions.
 
